@@ -297,7 +297,7 @@ export default function DiagnosisPage() {
                                 </label>
                                 <select 
                                     value={pdfLanguage} 
-                                    onChange={(e) => setPdfLanguage(e.target.value)}
+                                    onChange={(e) => setPdfLanguage(e.target.value as "english" | "gujarati")}
                                     className="px-[var(--space-2)] py-[var(--space-1)] border border-[var(--ui-border)] rounded-[var(--radius-sm)] bg-[var(--ui-surface)] text-[var(--ui-text)] text-[var(--text-sm)] min-w-[100px]"
                                 >
                                     <option value="english">English</option>
@@ -400,10 +400,10 @@ export default function DiagnosisPage() {
                         </div>
                     </div>
 
-                        {/* Treatment Plan & Care Guide Block */}
+                        {/* Treatment Plan & Care Block */}
                         <div className="border border-[var(--ui-border)] p-[var(--space-6)] md:p-[var(--space-8)] rounded-[var(--radius-lg)] bg-[var(--ui-surface)] w-full">
                             <div className="flex flex-col gap-[var(--space-8)]">
-                                <TreatmentPlan remedies={result.remedies} language={language} />
+                                <TreatmentPlan remedies={result.remedies || []} language={language} />
                                 
                                 {result.prescribed_care && (
                                     <DetailedCareGuide prescribedCare={result.prescribed_care} language={language} />

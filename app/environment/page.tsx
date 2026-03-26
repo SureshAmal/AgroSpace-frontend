@@ -146,7 +146,7 @@ export default function EnvironmentPage() {
       recs.push({ type: 'advice', text: language === 'gujarati' ? `ઠંડું તાપમાન (${weatherDisplay.temperature}°C) - હિમથી સંવેદનશીલ છોડને સુરક્ષિત કરો, ઠંડી-મોસમના પાકો માટે આદર્શ.` : `Cool temperature (${weatherDisplay.temperature}°C) - Protect frost-sensitive plants, ideal for cool-season crops.` });
     }
 
-    if (weatherDisplay.rainfall > 0) {
+    if (weatherDisplay.rainfall !== undefined && weatherDisplay.rainfall > 0) {
       recs.push({ type: 'advice', text: language === 'gujarati' ? `તાજેતરનો વરસાદ (${weatherDisplay.rainfall}mm) - સિંચાઈ ઘટાડો, પાણી ભરાવા માટે નિરીક્ષણ કરો.` : `Recent rainfall (${weatherDisplay.rainfall}mm) - Reduce irrigation, monitor for waterlogging.` });
     }
 
@@ -159,15 +159,15 @@ export default function EnvironmentPage() {
       recs.push({ type: 'success', text: language === 'gujarati' ? `શ્રેષ્ઠ pH (${soilDisplay.ph}) - મોટાભાગના પાકો માટે સંપૂર્ણ શ્રેણી.` : `Optimal pH (${soilDisplay.ph}) - Perfect range for most crops.` });
     }
 
-    if (soilDisplay.nitrogen.toLowerCase() === 'low' || soilDisplay.nitrogen === 'ઓછું') {
+    if (typeof soilDisplay.nitrogen === 'string' && (soilDisplay.nitrogen.toLowerCase() === 'low' || soilDisplay.nitrogen === 'ઓછું')) {
       recs.push({ type: 'warning', text: language === 'gujarati' ? 'ઓછું નાઇટ્રોજન - પાંદડાની વૃદ્ધિ વધારવા માટે નાઇટ્રોજન-સમૃદ્ધ ખાતર લાગુ કરો.' : 'Low nitrogen - Apply nitrogen-rich fertilizer to boost leafy growth.' });
     }
     
-    if (soilDisplay.phosphorus.toLowerCase() === 'low' || soilDisplay.phosphorus === 'ઓછું') {
+    if (typeof soilDisplay.phosphorus === 'string' && (soilDisplay.phosphorus.toLowerCase() === 'low' || soilDisplay.phosphorus === 'ઓછું')) {
       recs.push({ type: 'warning', text: language === 'gujarati' ? 'ઓછું ફોસ્ફરસ - મૂળના વિકાસ અને ફૂલ માટે બોન મીલ અથવા રોક ફોસ્ફેટ લાગુ કરો.' : 'Low phosphorus - Apply bone meal or rock phosphate for root development and flowering.' });
     }
     
-    if (soilDisplay.potassium.toLowerCase() === 'low' || soilDisplay.potassium === 'ઓછું') {
+    if (typeof soilDisplay.potassium === 'string' && (soilDisplay.potassium.toLowerCase() === 'low' || soilDisplay.potassium === 'ઓછું')) {
       recs.push({ type: 'warning', text: language === 'gujarati' ? 'ઓછું પોટેશિયમ - રોગ પ્રતિકાર અને ફળની ગુણવત્તા માટે પોટાશ અથવા લાકડાની રાખ ઉમેરો.' : 'Low potassium - Add potash or wood ash for disease resistance and fruit quality.' });
     }
 
@@ -232,7 +232,7 @@ export default function EnvironmentPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-[var(--space-3)]">
             <StatCard icon={WaterIcon} label={t('soilMoisture', language)} value={soilDisplay.moisture} unit="%" />
-            <StatCard icon={TemperatureIcon} label={t('soilTemperature', language)} value={soilDisplay.temperature} unit="°C" />
+            {soilDisplay.temperature !== undefined && <StatCard icon={TemperatureIcon} label={t('soilTemperature', language)} value={soilDisplay.temperature} unit="°C" />}
           </div>
 
           <div className="mt-[var(--space-4)] p-[var(--space-5)] bg-[var(--ui-surface-muted)] rounded-[var(--radius-lg)] border border-[var(--ui-border)]">
